@@ -1,1 +1,8 @@
+<<<<<<< 69312c22cea21ea367d742fb1dfdb0b59e4d6987
 **/*.o
+=======
+**/*.o
+*.bin
+*.srec
+*.imx
+>>>>>>> update gitignore
