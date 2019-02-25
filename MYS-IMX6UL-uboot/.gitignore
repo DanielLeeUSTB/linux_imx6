@@ -5,6 +5,10 @@
 #
 # Normal rules
 #
+*.bin
+*.imx
+*.srec
+**.o
 .*
 *.o
 *.o.*

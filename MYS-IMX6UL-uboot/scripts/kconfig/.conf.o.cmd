@@ -1,4 +1,4 @@
-cmd_scripts/kconfig/conf.o := cc -Wp,-MD,scripts/kconfig/.conf.o.d -Wall -Wstrict-prototypes -O2 -fomit-frame-pointer   -D_GNU_SOURCE -DCURSES_LOC="<ncurses.h>" -DLOCALE   -c -o scripts/kconfig/conf.o scripts/kconfig/conf.c
+cmd_scripts/kconfig/conf.o := cc -Wp,-MD,scripts/kconfig/.conf.o.d -Wall -Wstrict-prototypes -O2 -fomit-frame-pointer   -D_GNU_SOURCE -DCURSES_LOC="<ncurses.h>" -DNCURSES_WIDECHAR=1 -DLOCALE   -c -o scripts/kconfig/conf.o scripts/kconfig/conf.c
 
 source_scripts/kconfig/conf.o := scripts/kconfig/conf.c
 

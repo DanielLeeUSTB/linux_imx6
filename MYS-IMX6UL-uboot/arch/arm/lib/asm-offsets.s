@@ -836,9 +836,6 @@ main:
 	.ascii	"bi_sramsize\000"
 .LASF17:
 	.ascii	"bi_memstart\000"
-.LASF59:
-	.ascii	"/home/daniel/Documents/linux/repo/linux_imx6/04-Sou"
-	.ascii	"rce/MYS-IMX6UL-uboot\000"
 .LASF35:
 	.ascii	"bi_dram\000"
 .LASF61:
@@ -889,6 +886,9 @@ main:
 	.ascii	"short int\000"
 .LASF26:
 	.ascii	"bi_ddr_freq\000"
+.LASF59:
+	.ascii	"/home/daniel/Documents/linux/repo/linux_imx6/MYS-IM"
+	.ascii	"X6UL-uboot\000"
 .LASF38:
 	.ascii	"eth_device\000"
 .LASF51:

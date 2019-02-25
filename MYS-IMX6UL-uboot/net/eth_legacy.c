@@ -255,6 +255,8 @@ int eth_initialize(void)
 		printf("Net Initialization Skipped\n");
 	}
 
+	printf("hello, i come here\n");
+
 	if (!eth_devices) {
 		puts("No ethernet found.\n");
 		bootstage_error(BOOTSTAGE_ID_NET_ETH_START);

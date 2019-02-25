@@ -322,6 +322,8 @@
 #define CONFIG_USB_MAX_CONTROLLER_COUNT 2
 #endif
 
+#define CONFIG_CMD_NET
+
 #ifdef CONFIG_CMD_NET
 #define CONFIG_CMD_PING
 #define CONFIG_CMD_DHCP
