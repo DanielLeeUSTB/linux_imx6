@@ -233,6 +233,7 @@ static int on_ipaddr(const char *name, const char *value, enum env_op op,
 		return 0;
 
 	net_ip = string_to_ip(value);
+	printf("this is parse ip address = 0x%x\n", net_ip.s_addr);
 
 	return 0;
 }

@@ -66,7 +66,8 @@ DECLARE_GLOBAL_DATA_PTR;
 #define MDIO_PAD_CTRL  (PAD_CTL_PUS_100K_UP | PAD_CTL_PUE |     \
 	PAD_CTL_DSE_48ohm   | PAD_CTL_SRE_FAST | PAD_CTL_ODE)
 
-#define ENET_CLK_PAD_CTRL  (PAD_CTL_DSE_40ohm   | PAD_CTL_SRE_FAST)
+#define ENET_CLK_PAD_CTRL  (PAD_CTL_PKE | PAD_CTL_SPEED_HIGH|\
+	PAD_CTL_DSE_40ohm   | PAD_CTL_SRE_FAST)
 
 #define ENET_RX_PAD_CTRL  (PAD_CTL_PKE | PAD_CTL_PUE |          \
 	PAD_CTL_SPEED_HIGH   | PAD_CTL_SRE_FAST)
@@ -716,6 +717,8 @@ static void setup_iomux_fec(int fec_id)
 int board_eth_init(bd_t *bis)
 {
 	setup_iomux_fec(CONFIG_FEC_ENET_DEV);
+
+	printf("\nsetup eth iomux,%d\n", CONFIG_FEC_ENET_DEV);
 
 	return fecmxc_initialize_multi(bis, CONFIG_FEC_ENET_DEV,
 				       CONFIG_FEC_MXC_PHYADDR, IMX_FEC_BASE);

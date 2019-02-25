@@ -85,6 +85,8 @@ void ping_receive(struct ethernet_hdr *et, struct ip_udp_hdr *ip, int len)
 	struct in_addr src_ip;
 	int eth_hdr_size;
 
+    printf("ping receive\n");
+
 	switch (icmph->type) {
 	case ICMP_ECHO_REPLY:
 		src_ip = net_read_ip((void *)&ip->ip_src);

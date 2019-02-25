@@ -371,6 +371,7 @@ static int fec_get_hwaddr(struct eth_device *dev, int dev_id,
 
 static int fec_set_hwaddr(struct eth_device *dev)
 {
+	int i = 0;
 	uchar *mac = dev->enetaddr;
 	struct fec_priv *fec = (struct fec_priv *)dev->priv;
 
@@ -378,6 +379,11 @@ static int fec_set_hwaddr(struct eth_device *dev)
 	writel(0, &fec->eth->iaddr2);
 	writel(0, &fec->eth->gaddr1);
 	writel(0, &fec->eth->gaddr2);
+
+    for(i=0;i<6;i++)
+	{
+	   printf("mac[%d]=0x%x\n",i,mac[i]);
+	}
 
 	/*
 	 * Set physical address
@@ -410,6 +416,7 @@ static void fec_reg_setup(struct fec_priv *fec)
 	/*
 	 * Set FEC-Lite receive control register(R_CNTRL):
 	 */
+	printf("--------fec->xcv_type=%d\n",fec->xcv_type);
 
 	/* Start with frame length = 1518, common for all modes. */
 	rcntrl = PKTSIZE << FEC_RCNTRL_MAX_FL_SHIFT;
