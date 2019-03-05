@@ -430,6 +430,21 @@ static void fec_reg_setup(struct fec_priv *fec)
 	writel(rcntrl, &fec->eth->r_cntrl);
 }
 
+void dump_net1_reg(void)
+{
+	printf("addr=0x%x, val = 0x%x\n", 0x02188004, readl((int*)0x02188004));
+	printf("addr=0x%x, val = 0x%x\n", 0x02188008, readl((int*)0x02188008));
+	printf("addr=0x%x, val = 0x%x\n", 0x02188010, readl((int*)0x02188010));
+	printf("addr=0x%x, val = 0x%x\n", 0x02188014, readl((int*)0x02188014));
+	printf("addr=0x%x, val = 0x%x\n", 0x02188024, readl((int*)0x02188024));
+	printf("addr=0x%x, val = 0x%x\n", 0x02188040, readl((int*)0x02188040));
+	printf("addr=0x%x, val = 0x%x\n", 0x02188044, readl((int*)0x02188044));
+	printf("addr=0x%x, val = 0x%x\n", 0x02188064, readl((int*)0x02188064));
+	printf("addr=0x%x, val = 0x%x\n", 0x02188084, readl((int*)0x02188084));
+	printf("addr=0x%x, val = 0x%x\n", 0x021880c4, readl((int*)0x021880c4));
+	printf("addr=0x%x, val = 0x%x\n", 0x021880e4, readl((int*)0x021880e4));
+	printf("addr=0x%x, val = 0x%x\n", 0x021880e8, readl((int*)0x021880e8));
+}
 /**
  * Start the FEC engine
  * @param[in] dev Our device to handle
@@ -594,6 +609,7 @@ static int fec_init(struct eth_device *dev, bd_t* bd)
 		miiphy_restart_aneg(dev);
 #endif
 	fec_open(dev);
+
 	return 0;
 }
 
