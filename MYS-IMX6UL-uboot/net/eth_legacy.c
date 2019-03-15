@@ -138,12 +138,6 @@ int eth_write_hwaddr(struct eth_device *dev, const char *base_name,
 
 	eth_getenv_enetaddr_by_index(base_name, eth_number, env_enetaddr);
 
-	printf("current env_enetaddr is %x:%x:%x:%x:%x:%x\n", env_enetaddr[0],env_enetaddr[1],
-		 env_enetaddr[2],env_enetaddr[3],env_enetaddr[4],env_enetaddr[5]);
-
-	printf("current dev->enetaddr is %x:%x:%x:%x:%x:%x\n", dev->enetaddr[0],dev->enetaddr[1],
-		 dev->enetaddr[2],dev->enetaddr[3],dev->enetaddr[4],dev->enetaddr[5]);
-
 	if (!is_zero_ethaddr(env_enetaddr)) {
 		if (!is_zero_ethaddr(dev->enetaddr) &&
 		    memcmp(dev->enetaddr, env_enetaddr, 6)) {
