@@ -4,9 +4,7 @@
 #include <linux/of_device.h>
 #include <linux/of_gpio.h>
 #include <linux/interrupt.h>
-
 struct private_data
-{
     struct platform_device *pdev;
     struct input_dev *input;
     struct pinctrl *pctrl;
@@ -15,19 +13,58 @@ struct private_data
     int irq;
 };
 
+static ssize_t gpio_store(struct device *dev,
+					struct device_attribute *attr,
+					const char *buf, size_t count)
+{
+    }
+    else
+    {
+        printk("this is gpio store0\n");
+        gpiod_set_value(pwdata->led, 0);
+    }
+	return count;
+}
+
+static ssize_t gpio_show(struct device *dev,
+                 struct device_attribute *attr,
+                 char *buf)
+{
+    char value = 0;
+    int len = 0;
+    struct private_data *pwdata = dev_get_drvdata(dev);
+    if (!pwdata)
+    {
+        return -ENOMEM;
+    }
+    value = gpio_get_value(pwdata->irq_gpio);
+    len = sprintf(buf,"vaule=%d\n",value);
+	//printk("this is gpio show\n");
+	return len;
+}
+
+static DEVICE_ATTR(gpio, 0660, gpio_show, gpio_store);
+
+static struct attribute *gpio_attributes[] = {
+    &dev_attr_gpio.attr,
+    NULL
+};
+
+static struct attribute_group gpio_attribute_group = {
+    .attrs = gpio_attributes
+};
+
 static irqreturn_t key_irq_handler(int irq, void *dev_id)
 {
     struct private_data *pwdata = (struct private_data *)dev_id;
     int pin_val = gpio_get_value(pwdata->irq_gpio);
-    printk("this is the key value change irq hander, pin_val=%d\n", pin_val);
     gpiod_set_value(pwdata->led, pin_val);
-    return IRQ_HANDLED;
+    input_report_key(pwdata->input, KEY_WAKEUP, 0x30+pin_val);
+
 }
 
-static int gpio_parse_dts(struct platform_device *pdev, struct private_data *pwdata)
 {
     struct device_node *np = pdev->dev.of_node;
-    if (!np)
     {
         return -ENOENT;
     }
@@ -84,6 +121,7 @@ static int input_gpio_probe(struct platform_device *pdev)
     }
     pwdata->input = input;
     platform_set_drvdata(pdev, pwdata);
+    dev_set_drvdata(&pdev->dev, pwdata);
 
     input_set_drvdata(input, pwdata);
     printk("-------gpio_parse_dts\n");
@@ -109,12 +147,12 @@ static int input_gpio_probe(struct platform_device *pdev)
     ret = devm_request_threaded_irq(&pdev->dev, pwdata->irq, NULL, key_irq_handler,
     IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING | IRQF_ONESHOT, "key_press", pwdata);
 
+    ret = sysfs_create_group(&pdev->dev.kobj, &gpio_attribute_group);
+
     return 0;
 }
-
 static int input_gpio_suspend(struct platform_device *pdev)
 {
-    return 0;
 }
 
 static int input_gpio_resume(struct platform_device *pdev)
