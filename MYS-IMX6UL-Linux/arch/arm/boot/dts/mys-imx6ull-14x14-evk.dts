@@ -41,7 +41,8 @@
 		pwms = <&pwm1 0 5000000>;
 		brightness-levels = <0 4 8 16 32 64 128 255>;
 		default-brightness-level = <6>;
-		status = "okay";
+		//status = "okay";
+		status = "disabled";
 	};
 
 	pxp_v4l2 {
@@ -151,11 +152,11 @@
 		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_leds>;
 
-		led0: cpu {
+		/*ed0: cpu {
 			label = "user";
 			gpios = <&gpio5 1 GPIO_ACTIVE_LOW>;
 			default-state = "off";
-		};
+		};*/
 
         led1: user {
 			label = "cpu";
@@ -165,7 +166,7 @@
 		};
 	};
 
-    gpio-keys {
+    /*gpio-keys {
 		compatible = "gpio-keys";
 		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_gpio_key>;
@@ -176,7 +177,15 @@
 			gpio-key,wakeup;
 			linux,code = <KEY_1>;
 		};
-    };
+    };*/
+	my-keys {
+		compatible = "my-keys";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_gpio_key>;
+
+		int-gpios = <&gpio5 0 GPIO_ACTIVE_HIGH>;
+		key-gpios = <&gpio5 1 GPIO_ACTIVE_LOW>;
+	};
 
 };
 
@@ -275,7 +284,8 @@
 	clock_frequency = <100000>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_i2c2>;
-	status = "okay";
+	//status = "okay";
+	status = "disabled";
 
     ft5x06: ft5x06@38 {
 		compatible = "ft5x06_ts";
@@ -286,6 +296,7 @@
 		tp_resetn = <&gpio5 3 0>;
         polling_mode = /bits/ 8 <1>;
         multi_touch = /bits/ 8 <0>;
+		status = "disabled";
 	};
 
 	codec: wm8960@1a {
@@ -294,6 +305,7 @@
 		clocks = <&clks IMX6UL_CLK_SAI2>;
 		clock-names = "mclk";
 		wlf,shared-lrclk;
+		status = "disabled";
 	};
 
 	ov5640: ov5640@3c {
@@ -308,7 +320,8 @@
 		csi_id = <0>;
 		mclk = <24000000>;
 		mclk_source = <0>;
-		status = "okay";
+		//status = "okay";
+		status = "disabled";
 		port {
 			ov5640_ep: endpoint {
 				remote-endpoint = <&csi1_ep>;
@@ -665,7 +678,8 @@
 		     &pinctrl_lcdif_ctrl
 		     &pinctrl_lcdif_reset>;
 	display = <&display0>;
-	status = "okay";
+	//status = "okay";
+	status = "disabled";
 
 	display0: display {
 		bits-per-pixel = <16>;
@@ -715,7 +729,8 @@
 &pwm1 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_pwm1>;
-	status = "okay";
+	//status = "okay";
+	status = "disabled";
 };
 
 &pxp {
@@ -725,7 +740,8 @@
 &qspi {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_qspi>;
-	status = "okay";
+	//status = "okay";
+	status = "disabled";
 	ddrsmp=<0>;
 
 	flash0: n25q256a@0 {
