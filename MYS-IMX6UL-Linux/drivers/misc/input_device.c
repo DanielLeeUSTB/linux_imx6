@@ -5,6 +5,7 @@
 #include <linux/of_gpio.h>
 #include <linux/interrupt.h>
 struct private_data
+{
     struct platform_device *pdev;
     struct input_dev *input;
     struct pinctrl *pctrl;
@@ -17,6 +18,15 @@ static ssize_t gpio_store(struct device *dev,
 					struct device_attribute *attr,
 					const char *buf, size_t count)
 {
+    struct private_data *pwdata = dev_get_drvdata(dev);
+    if (!pwdata)
+    {
+        return -ENOMEM;
+    }
+    if(buf[0] == '1')
+    {
+        printk("this is gpio store1\n");
+        gpiod_set_value(pwdata->led, 1);
     }
     else
     {
@@ -60,11 +70,14 @@ static irqreturn_t key_irq_handler(int irq, void *dev_id)
     int pin_val = gpio_get_value(pwdata->irq_gpio);
     gpiod_set_value(pwdata->led, pin_val);
     input_report_key(pwdata->input, KEY_WAKEUP, 0x30+pin_val);
-
+    printk("this is the key value change irq hander, pin_val=%d\n", pin_val);
+    return IRQ_HANDLED;
 }
 
+static int gpio_parse_dts(struct platform_device *pdev, struct private_data *pwdata)
 {
     struct device_node *np = pdev->dev.of_node;
+    if (!np)
     {
         return -ENOENT;
     }
@@ -153,6 +166,7 @@ static int input_gpio_probe(struct platform_device *pdev)
 }
 static int input_gpio_suspend(struct platform_device *pdev)
 {
+    return 0;
 }
 
 static int input_gpio_resume(struct platform_device *pdev)

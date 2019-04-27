@@ -277,15 +277,19 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_i2c1>;
 	status = "okay";
-
 };
 
 &i2c2 {
 	clock_frequency = <100000>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_i2c2>;
-	//status = "okay";
-	status = "disabled";
+	status = "okay";
+
+	temp: tempsensor@68 {
+		compatible = "i2c,temperature";
+		reg = <0x68>;
+		status = "okay";
+	};
 
     ft5x06: ft5x06@38 {
 		compatible = "ft5x06_ts";
@@ -296,7 +300,7 @@
 		tp_resetn = <&gpio5 3 0>;
         polling_mode = /bits/ 8 <1>;
         multi_touch = /bits/ 8 <0>;
-		status = "disabled";
+		status = "okay";
 	};
 
 	codec: wm8960@1a {
